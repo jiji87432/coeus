@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.pay.coeus.core.dao.coeus.CustomerContactInfoMapper">
+
+	<resultMap id="BaseResultMap" type="com.pay.coeus.model.entity.CustomerContactInfo">
+        <result property="id" column="ID"/>
+        <result property="optimistic" column="OPTIMISTIC"/>
+        <result property="customerNo" column="CUSTOMER_NO"/>
+        <result property="customerRole" column="CUSTOMER_ROLE"/>
+        <result property="phone" column="PHONE"/>
+        <result property="source" column="SOURCE"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+        <result property="remark" column="REMARK"/>
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Base_Column_List">
+		ID,OPTIMISTIC,CUSTOMER_NO,CUSTOMER_ROLE,PHONE,SOURCE,CREATE_TIME,UPDATE_TIME,REMARK
+	</sql>
+	
+	<!-- 获取用户: 输出直接映射到对象 -->
+	<select id="getByCustomerNo"  resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List" />
+		FROM CUSTOMER_CONTACT_INFO
+		WHERE CUSTOMER_NO=#{customerNo}
+		LIMIT 1
+	</select>
+	
+	<select id="findById"  resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List" />
+		FROM CUSTOMER_CONTACT_INFO
+		WHERE ID=#{id}
+	</select>
+	
+	<select id="getListByPhone"  resultType="String">
+		SELECT CUSTOMER_NO
+		FROM CUSTOMER_CONTACT_INFO
+		WHERE PHONE=#{phone}
+	</select>
+	
+	<!-- 新增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO CUSTOMER_CONTACT_INFO (
+        	OPTIMISTIC,
+        	CUSTOMER_NO,
+        	CUSTOMER_ROLE,
+        	PHONE,
+        	SOURCE,
+        	CREATE_TIME,
+        	UPDATE_TIME,
+        	REMARK
+		) VALUES (
+        	0,
+        	#{customerNo},
+        	#{customerRole},
+        	#{phone},
+        	#{source},
+        	sysdate(),
+        	sysdate(),
+        	#{remark}
+		)
+	</insert>
+	
+	<insert id="insertBatch" useGeneratedKeys="true" parameterType="java.util.List">  
+	    <selectKey resultType="long" keyProperty="id" order="AFTER">  
+	        SELECT 
+	        LAST_INSERT_ID() 
+	    </selectKey>  
+	    INSERT INTO CUSTOMER_CONTACT_INFO (OPTIMISTIC, 
+        	CUSTOMER_NO,
+        	CUSTOMER_ROLE,
+        	PHONE,
+        	SOURCE,
+        	CREATE_TIME,
+        	UPDATE_TIME,
+        	REMARK) 
+	    VALUES 
+	    <foreach collection="infoList" item="item" index="index" separator="," >  
+	        (0,
+        	#{item.customerNo},
+        	#{item.customerRole},
+        	#{item.phone},
+        	#{item.source},
+        	#{item.createTime},
+        	#{item.createTime},
+        	#{item.remark} )
+	    </foreach>  
+	</insert>  
+	
+	<update id="update">
+		UPDATE CUSTOMER_CONTACT_INFO 
+		<set>
+			OPTIMISTIC = OPTIMISTIC+1,
+			CUSTOMER_NO=#{customerNo},
+        	CUSTOMER_ROLE=#{customerRole},
+        	PHONE=#{phone},
+        	SOURCE=#{source},
+        	UPDATE_TIME=sysdate(),
+        	REMARK=#{remark}
+		</set>
+        WHERE 
+	        ID = #{id}
+	</update>
+	
+	<select id="findAllList"  resultMap="BaseResultMap">
+		SELECT a.ID AS ID,
+			a.CUSTOMER_NO AS CUSTOMER_NO,
+        	a.CUSTOMER_ROLE AS CUSTOMER_ROLE,
+        	a.PHONE AS PHONE,
+        	a.SOURCE AS SOURCE,
+        	a.CREATE_TIME AS CREATE_TIME,
+        	a.UPDATE_TIME AS UPDATE_TIME,
+        	a.REMARK AS REMARK
+		FROM CUSTOMER_CONTACT_INFO a
+		<where>
+			<if test="param.customerNo != null and param.customerNo != ''">
+				AND a.CUSTOMER_NO =  #{param.customerNo}
+			</if>
+			<if test="param.customerRole != null and param.customerRole != ''">
+				AND a.CUSTOMER_ROLE =  #{param.customerRole}
+			</if>
+			<if test="param.phone != null and param.phone != ''">
+				AND a.PHONE =  #{param.phone}
+			</if>
+			<if test="param.source != null and param.source != ''">
+				AND a.SOURCE = #{param.source}
+			</if>
+			<if test="param.createTimeStart != null and param.createTimeStart != ''">
+				AND a.UPDATE_TIME <![CDATA[ >= ]]> #{param.createTimeStart}
+			</if>
+			<if test="param.createTimeEnd != null and param.createTimeEnd != ''">
+				AND a.UPDATE_TIME <![CDATA[ <= ]]> #{param.createTimeEnd}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getCustomerNoAndRoleByPhone"  resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List" />
+		FROM CUSTOMER_CONTACT_INFO
+		WHERE PHONE=#{phone}
+	</select>
+	
+	<update id="updateToAgent">
+		UPDATE CUSTOMER_CONTACT_INFO 
+		<set>
+			OPTIMISTIC = OPTIMISTIC+1,
+        	CUSTOMER_ROLE=#{customerRole},
+        	UPDATE_TIME=sysdate()
+		</set>
+        WHERE 
+	        ID = #{id}
+	</update>
+	
+	
+</mapper>

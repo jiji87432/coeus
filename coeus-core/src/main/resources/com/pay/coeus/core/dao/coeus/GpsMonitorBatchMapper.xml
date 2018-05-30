@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.pay.coeus.core.dao.coeus.GpsMonitorBatchMapper">
+
+	<resultMap id="BaseResultMap" type="com.pay.coeus.model.entity.GpsMonitorBatch">
+        <result property="id" column="ID"/>
+        <result property="optimistic" column="OPTIMISTIC"/>
+        <result property="dateScope" column="DATE_SCOPE"/>
+        <result property="createTime" column="CREATE_TIME"/>
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Base_Column_List">
+		ID,OPTIMISTIC,DATE_SCOPE,CREATE_TIME
+	</sql>
+	
+	<!-- 新增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO GPS_MONITOR_BATCH (
+        	OPTIMISTIC,
+        	DATE_SCOPE,
+        	CREATE_TIME
+		) VALUES (
+        	0,
+        	#{dateScope},
+        	sysdate()
+		)
+	</insert>
+	
+</mapper>

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.pay.coeus.core.dao.coeus.TrCallRecordMapper">
+	
+	<!-- 新增 -->
+	<insert id="insertCallRecord">
+		INSERT INTO TR_Call_Record (
+				
+				<if test="param.uniqueId != null ">
+				uniqueId,
+				</if>
+				<if test="param.hotline != null ">
+				hotline,
+				</if>
+				<if test="param.numberTrunk != null ">
+				numberTrunk,
+				</if>
+				<if test="param.customerNumber != null ">
+				customerNumber,
+				</if>
+				<if test="param.customerProvince != null ">
+				customerProvince,
+				</if>
+				<if test="param.customerCity != null ">
+				customerCity,
+				</if>
+				<if test="param.queueName != null ">
+				queueName,
+				</if>
+				<if test="param.cno != null ">
+				cno,
+				</if>
+				<if test="param.clientNumber != null ">
+				clientNumber,
+				</if>
+				<if test="param.status != null ">
+				status,
+				</if>
+				<if test="param.mark != null ">
+				mark,
+				</if>
+				<if test="param.startTime != null ">
+				startTime,
+				</if>
+				<if test="param.answerTime != null ">
+				answerTime,
+				</if>
+				<if test="param.bridgeTime != null ">
+				bridgeTime,
+				</if>
+				<if test="param.bridgeDuration != null ">
+				bridgeDuration,
+				</if>
+				<if test="param.cost != null ">
+				cost,
+				</if>
+				<if test="param.totalDuration != null ">
+				totalDuration,
+				</if>
+				<if test="param.recordFile != null ">
+				recordFile,
+				</if>
+				<if test="param.inCaseLib != null ">
+				inCaseLib,
+				</if>
+				<if test="param.score != null ">
+				score,
+				</if>
+				<if test="param.callType != null ">
+				callType,
+				</if>
+				<if test="param.comment != null ">
+				comment,
+				</if>
+				<if test="param.ivrName != null ">
+				ivrName,
+				</if>
+				<if test="param.endReason != null ">
+				endReason,
+				</if>
+				<if test="param.userField != null ">
+				userField,
+				</if>
+				<if test="param.sipCause != null ">
+				sipCause,
+				</if>
+				<if test="param.recordFileName != null ">
+				recordFileName,
+				</if>
+				<if test="param.totalCost != null ">
+				totalCost,
+				</if>
+				 optimistic 
+				 ) VALUES ( 
+				
+				<if test="param.uniqueId != null ">
+				#{param.uniqueId},
+				</if>
+				<if test="param.hotline != null ">
+				#{param.hotline},
+				</if>
+				<if test="param.numberTrunk != null ">
+				#{param.numberTrunk},
+				</if>
+				<if test="param.customerNumber != null ">
+				#{param.customerNumber},
+				</if>
+				<if test="param.customerProvince != null ">
+				#{param.customerProvince},
+				</if>
+				<if test="param.customerCity != null ">
+				#{param.customerCity},
+				</if>
+				<if test="param.queueName != null ">
+				#{param.queueName},
+				</if>
+				<if test="param.cno != null ">
+				#{param.cno},
+				</if>
+				<if test="param.clientNumber != null ">
+				#{param.clientNumber},
+				</if>
+				<if test="param.status != null ">
+				#{param.status},
+				</if>
+				<if test="param.mark != null ">
+				#{param.mark},
+				</if>
+				<if test="param.startTime != null ">
+				#{param.startTime},
+				</if>
+				<if test="param.answerTime != null ">
+				#{param.answerTime},
+				</if>
+				<if test="param.bridgeTime != null ">
+				#{param.bridgeTime},
+				</if>
+				<if test="param.bridgeDuration != null ">
+				#{param.bridgeDuration},
+				</if>
+				<if test="param.cost != null ">
+				#{param.cost},
+				</if>
+				<if test="param.totalDuration != null ">
+				#{param.totalDuration},
+				</if>
+				<if test="param.recordFile != null ">
+				#{param.recordFile},
+				</if>
+				<if test="param.inCaseLib != null ">
+				#{param.inCaseLib},
+				</if>
+				<if test="param.score != null ">
+				#{param.score},
+				</if>
+				<if test="param.callType != null ">
+				#{param.callType},
+				</if>
+				<if test="param.comment != null ">
+				#{param.comment},
+				</if>
+				<if test="param.ivrName != null ">
+				#{param.ivrName},
+				</if>
+				<if test="param.endReason != null ">
+				#{param.endReason},
+				</if>
+				<if test="param.userField != null ">
+				#{param.userField},
+				</if>
+				<if test="param.sipCause != null ">
+				#{param.sipCause},
+				</if>
+				<if test="param.recordFileName != null ">
+				#{param.recordFileName},
+				</if>
+				<if test="param.totalCost != null ">
+				#{param.totalCost},
+				</if>
+				 0 
+
+		)
+	</insert>
+	<insert id="insertCallRecordDetail">
+		INSERT INTO TR_Call_Record_Detail (
+				
+				<if test="param.mainUniqueId != null ">
+				mainUniqueId,
+				</if>
+				<if test="param.calleeNumber != null ">
+				calleeNumber,
+				</if>
+				<if test="param.clientName != null ">
+				clientName,
+				</if>
+				<if test="param.cno != null ">
+				cno,
+				</if>
+				<if test="param.startTime != null ">
+				startTime,
+				</if>
+				<if test="param.answerTime != null ">
+				answerTime,
+				</if>
+				<if test="param.endTime != null ">
+				endTime,
+				</if>
+				<if test="param.billDuration != null ">
+				billDuration,
+				</if>
+				<if test="param.cost != null ">
+				cost,
+				</if>
+				<if test="param.callType != null ">
+				callType,
+				</if>
+				<if test="param.status != null ">
+				status,
+				</if>
+				<if test="param.sipCause != null ">
+				sipCause,
+				</if>
+				<if test="param.record_file != null ">
+				record_file,
+				</if>
+				<if test="param.mark != null ">
+				mark,
+				</if>
+				 optimistic 
+				 ) VALUES ( 
+				
+				<if test="param.mainUniqueId != null ">
+				#{param.mainUniqueId},
+				</if>
+				<if test="param.calleeNumber != null ">
+				#{param.calleeNumber},
+				</if>
+				<if test="param.clientName != null ">
+				#{param.clientName},
+				</if>
+				<if test="param.cno != null ">
+				#{param.cno},
+				</if>
+				<if test="param.startTime != null ">
+				#{param.startTime},
+				</if>
+				<if test="param.answerTime != null ">
+				#{param.answerTime},
+				</if>
+				<if test="param.endTime != null ">
+				#{param.endTime},
+				</if>
+				<if test="param.billDuration != null ">
+				#{param.billDuration},
+				</if>
+				<if test="param.cost != null ">
+				#{param.cost},
+				</if>
+				<if test="param.callType != null ">
+				#{param.callType},
+				</if>
+				<if test="param.status != null ">
+				#{param.status},
+				</if>
+				<if test="param.sipCause != null ">
+				#{param.sipCause},
+				</if>
+				<if test="param.record_file != null ">
+				#{param.record_file},
+				</if>
+				<if test="param.mark != null ">
+				#{param.mark},
+				</if>
+				 0 
+		)
+	</insert>
+	
+</mapper>

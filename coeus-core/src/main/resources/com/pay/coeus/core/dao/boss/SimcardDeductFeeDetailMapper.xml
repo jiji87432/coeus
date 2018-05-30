@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.pay.coeus.core.dao.boss.SimcardDeductFeeDetailMapper">
+
+	<resultMap id="BaseResultMap" type="com.pay.coeus.model.entity.SimcardDeductFeeDetail">
+        <result property="id" column="ID"/>
+        <result property="optimistic" column="OPTIMISTIC"/>
+        <result property="customerNo" column="CUSTOMER_NO"/>
+        <result property="imsi" column="IMSI"/>
+        <result property="posSn" column="POS_SN"/>
+        <result property="posCati" column="POS_CATI"/>
+        <result property="posFirstBindTime" column="POS_FIRSTBIND_TIME"/>
+        <result property="firstDeductFeeTime" column="FIRST_DEDUCTFEE_TIME"/>
+        <result property="deductFeeSuccTime" column="DEDUCTFEE_SUCC_TIME"/>
+        <result property="nextMessageTime" column="NEXT_MESSAGE_TIME"/>
+        <result property="totalFee" column="TOTAL_FEE"/>
+        <result property="deductFee" column="DEDUCT_FEE"/>
+        <result property="deductStatus" column="DEDUCT_STATUS"/>
+        <result property="messageStatus" column="MESSAGE_STATUS"/>
+        <result property="simStatus" column="SIM_STATUS"/>
+        <result property="messageTime" column="MESSAGE_TIME"/>
+        <result property="simCloseTime" column="SIM_CLOSE_TIME"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="freezeNo" column="FREEZE_NO"/>
+        <result property="requestId" column="REQUEST_ID"/>
+        <result property="refundTime" column="REFUND_TIME"/>
+        <result property="refundOperator" column="REFUND_OPERATOR"/>
+        <result property="transOrder" column="TRANS_ORDER"/>
+        <result property="refundTransOrder" column="REFUND_TRANS_ORDER"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Base_Column_List">
+		ID,OPTIMISTIC,CUSTOMER_NO,IMSI,POS_SN,POS_CATI,POS_FIRSTBIND_TIME,FIRST_DEDUCTFEE_TIME,DEDUCTFEE_SUCC_TIME,
+		NEXT_MESSAGE_TIME,TOTAL_FEE,DEDUCT_FEE,DEDUCT_STATUS,MESSAGE_STATUS,SIM_STATUS,MESSAGE_TIME,SIM_CLOSE_TIME,
+		CREATE_TIME,FREEZE_NO,REQUEST_ID,REFUND_TIME,REFUND_OPERATOR,TRANS_ORDER,REFUND_TRANS_ORDER
+	</sql>
+
+	<select id="findSimDeductFreezeList"  resultType="java.util.HashMap" >
+		select * from (
+        	select t.id, t.customer_no, p.pos_sn, t.sim_card as imsi, t.pos_cati, p.use_type 
+        		from posp_boss.pos_request t
+				left join posp_boss.pos p on t.pos_cati = p.pos_cati
+        		where t.id in (select max(pr.id) id 
+        	        from posp_boss.pos_request pr 
+        			left join posp_boss.sim_card sc on pr.sim_card = sc.imsi  
+        			left join posp_boss.sim_batch sb on sb.id = sc.simbatch_id 
+        			left join posp_boss.customer c on c.customer_no = pr.customer_no 
+        			left join posp_boss.mcc_info_new mi on mi.mcc = c.mcc 
+        			left join posp_boss.pos p on p.pos_cati = pr.pos_cati 
+        			join posp_boss.posbind_bill pb on (pb.customer_no = pr.customer_no and pb.pos_sn = p.pos_sn) 
+        			where pr.create_time <![CDATA[ >= ]]> to_date(to_char(sysdate - 1, 'yyyymmdd') || ' 00:00:00', 'yyyy-mm-dd hh24:mi:ss') 
+        				and pr.create_time <![CDATA[ <= ]]> to_date(to_char(sysdate - 1, 'yyyymmdd') || ' 23:59:59', 'yyyy-mm-dd hh24:mi:ss') 
+       					and pr.trans_type = 'PURCHASE' 
+        				and pr.response_code = '00'
+        				and sb.sim_supplier != 'HEBEI_ZHOU'
+        				and sb.sim_supplier != 'SHENZHEN_LI'
+        				and sb.sim_supplier != 'KFYG'
+        				and sb.open_card_date is not null
+        				and sb.open_card_date <![CDATA[ <= ]]> add_months(sysdate, -12)
+        				and c.status = 'TRUE'
+        				and c.open_time <![CDATA[ <= ]]> add_months(sysdate, -12)
+        				and p.use_type in ('MOBILE', 'TMOBILE', 'INTELLIGENCE') 
+        				and pb.create_time <![CDATA[ <= ]]> add_months(sysdate, -12) 
+        				and p.pos_sn not in (
+        					select pos_sn  
+        					from posp_boss.simcard_deduct_fee_detail sf 
+        					where sf.create_time between add_months(sysdate, -12) and sysdate 
+        				)
+                        and sc.imsi not in (
+                            select imsi 
+        					from posp_boss.simcard_deduct_fee_detail t 
+       						where t.imsi is not null  
+        					and t.create_time between add_months(sysdate, -12) and sysdate 
+        				) 
+        			group by sc.imsi
+        		)
+        	)
+	</select>
+	
+	<!-- 新增 -->
+	<insert id="saveSimCardDeductFeeDetail">
+		INSERT INTO SIMCARD_DEDUCT_FEE_DETAIL (
+			ID,
+        	OPTIMISTIC,
+        	CUSTOMER_NO,
+        	IMSI,
+        	POS_SN,
+        	POS_CATI,
+        	POS_FIRSTBIND_TIME,
+        	FIRST_DEDUCTFEE_TIME,
+        	DEDUCTFEE_SUCC_TIME,
+			NEXT_MESSAGE_TIME,
+			TOTAL_FEE,
+			DEDUCT_FEE,
+			DEDUCT_STATUS,
+			MESSAGE_STATUS,
+			SIM_STATUS,
+			MESSAGE_TIME,
+			SIM_CLOSE_TIME,
+			CREATE_TIME,
+			FREEZE_NO,
+			REQUEST_ID,
+			REFUND_TIME,
+			REFUND_OPERATOR,
+			TRANS_ORDER,
+			REFUND_TRANS_ORDER
+		) VALUES (
+			SEQ_SIMFEEDETAIL_ID.nextval,
+        	0,
+        	#{customerNo},
+			#{imsi},
+			#{posSn},
+			#{posCati},
+			#{posFirstBindTime},
+			#{firstDeductFeeTime},
+			#{deductFeeSuccTime},
+			#{nextMessageTime},
+			#{totalFee},
+			#{deductFee},
+			#{deductStatus},
+			#{messageStatus},
+			#{simStatus},
+			#{messageTime},
+			#{simCloseTime},
+			#{createTime},
+			#{freezeNo},
+			#{requestId},
+			#{refundTime},
+			#{refundOperator},
+			#{transOrder},
+			#{refundTransOrder}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE SIMCARD_DEDUCT_FEE_DETAIL
+		<set>
+			OPTIMISTIC = OPTIMISTIC+1,
+			CUSTOMER_NO = #{customerNo},
+        	IMSI = #{imsi},
+        	POS_SN = #{posSn},
+        	POS_CATI = #{posCati},
+        	POS_FIRSTBIND_TIME = #{posFirstBindTime},
+        	FIRST_DEDUCTFEE_TIME = #{firstDeductFeeTime},
+        	DEDUCTFEE_SUCC_TIME = #{deductFeeSuccTime},
+			NEXT_MESSAGE_TIME = #{nextMessageTime},
+			TOTAL_FEE = #{totalFee},
+			DEDUCT_FEE = #{deductFee},
+			DEDUCT_STATUS = #{deductStatus},
+			MESSAGE_STATUS = #{messageStatus},
+			SIM_STATUS = #{simStatus},
+			MESSAGE_TIME = #{messageTime},
+			SIM_CLOSE_TIME = #{simCloseTime},
+			FREEZE_NO = #{freezeNo},
+			REQUEST_ID = #{requestId},
+			REFUND_TIME = #{refundTime},
+			REFUND_OPERATOR = #{refundOperator},
+			TRANS_ORDER = #{transOrder},
+			REFUND_TRANS_ORDER = #{refundTransOrder}
+		</set>
+        WHERE 
+	        ID = #{id}
+	</update>
+	
+	
+	<select id="findSimCardDeductFeeDetailListByStatus"  resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List" />
+		FROM SIMCARD_DEDUCT_FEE_DETAIL
+		WHERE DEDUCT_STATUS = #{deductStatus}
+	</select>
+	
+	
+</mapper>

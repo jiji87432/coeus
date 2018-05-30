@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="coeus-core:war">
+    <output-path>$PROJECT_DIR$/coeus-core/target</output-path>
+    <root id="archive" name="coeus-core-1.0.1.war">
+      <element id="artifact" artifact-name="coeus-core:war exploded" />
+    </root>
+  </artifact>
+</component>

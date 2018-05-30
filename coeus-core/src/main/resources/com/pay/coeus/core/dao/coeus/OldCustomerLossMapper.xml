@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.pay.coeus.core.dao.coeus.OldCustomerLossMapper">
+	<resultMap id="BaseResultMap" type="com.pay.coeus.model.entity.OldCustomerLoss">
+        <result property="id" column="ID"/>
+        <result property="optimistic" column="OPTIMISTIC"/>
+        <result property="customerNo" column="CUSTOMER_NO"/>
+        <result property="customerName" column="CUSTOMER_NAME"/>
+        <result property="customerStatus" column="CUSTOMER_STATUS"/>
+        <result property="customerLevel" column="CUSTOMER_LEVEL"/>
+        <result property="customerCheckInfo" column="CUSTOMER_CHECK_INFO"/>
+        <result property="bindTime" column="BIND_TIME"/>
+        <result property="activateTime" column="ACTIVATE_TIME"/>
+        <result property="resultType" column="RESULT_TYPE"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="linkMan" column="LINK_MAN"/>
+	</resultMap>
+
+	<resultMap id="BaseResultMap2" type="com.pay.coeus.model.entity.OldCustomerLoss">
+        <result property="id" column="ID"/>
+        <result property="optimistic" column="OPTIMISTIC"/>
+        <result property="customerNo" column="CUSTOMER_NO"/>
+        <result property="customerName" column="CUSTOMER_NAME"/>
+        <result property="customerStatus" column="CUSTOMER_STATUS"/>
+        <result property="customerLevel" column="CUSTOMER_LEVEL"/>
+        <result property="customerCheckInfo" column="CUSTOMER_CHECK_INFO"/>
+        <result property="bindTime" column="BIND_TIME"/>
+        <result property="activateTime" column="ACTIVATE_TIME"/>
+        <result property="resultType" column="RESULT_TYPE"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="linkMan" column="LINK_MAN"/>
+        <result property="isLoss" column="IS_LOSS"/>
+        <result property="isTrans" column="IS_TRANS"/>
+        <result property="transTime" column="TRANS_TIME"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+        <result property="posCount" column="POS_COUNT"/>
+	</resultMap>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Base_Column_List">
+		ID,OPTIMISTIC,CUSTOMER_NO,CUSTOMER_NAME,CUSTOMER_STATUS,CUSTOMER_LEVEL, CUSTOMER_CHECK_INFO, BIND_TIME, ACTIVATE_TIME, RESULT_TYPE, CREATE_TIME, LINK_MAN,IS_TRANS,TRANS_TIME,UPDATE_TIME
+	</sql>
+	
+	<insert id="insertBatch" useGeneratedKeys="true" parameterType="java.util.List">  
+	    insert into old_customer_loss (
+	    	OPTIMISTIC,
+	    	CUSTOMER_NO,
+	    	CUSTOMER_NAME,
+	    	CUSTOMER_STATUS,
+	    	CUSTOMER_LEVEL, 
+	    	CUSTOMER_CHECK_INFO,
+	    	BIND_TIME, 
+	    	ACTIVATE_TIME, 
+	    	RESULT_TYPE, 
+	    	LINK_MAN,
+	    	POS_COUNT,
+	    	UPDATE_TIME,
+	    	CREATE_TIME)   
+	    values 
+	    <foreach collection="customerList" item="item" index="index" separator="," >  
+	        (0,
+        	#{item.customerNo},
+        	#{item.customerName},
+        	#{item.customerStatus},
+        	#{item.customerLevel},
+        	#{item.customerCheckInfo},
+        	#{item.bindTime},
+        	#{item.activateTime},
+        	#{item.resultType},
+        	#{item.linkMan},
+        	#{item.posCount},
+        	sysdate(),
+        	sysdate())  
+	    </foreach>  
+	</insert>  
+	
+	<select id="findAllList"  resultMap="BaseResultMap2">
+		SELECT
+		  a.*, CASE
+		WHEN c.CREATE_TIME is null then 'N' else 'Y' end 
+		AS IS_LOSS
+		FROM
+		  old_customer_loss a
+		LEFT JOIN (
+		  SELECT
+		    CUSTOMER_NO,
+		    ICCID
+		  FROM
+		    GPS_MONITOR_CUSTOMER
+		  WHERE
+		    ID IN (
+		      SELECT
+		        MAX(ID)
+		      FROM
+		        GPS_MONITOR_CUSTOMER
+		      GROUP BY
+		        CUSTOMER_NO
+		    )
+		) b ON b.CUSTOMER_NO = a.customer_no
+		LEFT JOIN (
+		  SELECT
+		    ICCID,
+		    MAX(CREATE_TIME) AS CREATE_TIME
+		  FROM
+		    GPS_MONITOR_DATA
+		  GROUP BY
+		    ICCID
+		) c ON c.ICCID = b.ICCID
+		AND c.CREATE_TIME >= a.create_time
+		<where>
+			<if test="param.customerStatus != null and param.customerStatus != ''">
+				AND a.CUSTOMER_STATUS =  #{param.customerStatus}
+			</if>
+			<if test="param.customerLevel != null and param.customerLevel != ''">
+				<if test="param.customerLevel == 'null'">
+					AND a.CUSTOMER_LEVEL is null
+				</if>
+				<if test="param.customerLevel != 'null'">
+					AND a.CUSTOMER_LEVEL =  #{param.customerLevel}
+				</if>
+			</if>
+			<if test="param.resultType != null and param.resultType != ''">
+				AND a.RESULT_TYPE =  #{param.resultType}
+			</if>
+			<if test="param.customerCheckInfo != null and param.customerCheckInfo != ''">
+				AND a.CUSTOMER_CHECK_INFO =  #{param.customerCheckInfo}
+			</if>
+			<if test="param.hasPos != null and param.hasPos != ''">
+				<if test='param.hasPos == "Y"'>
+					AND a.POS_COUNT IS NOT NULL AND a.POS_COUNT > 0
+				</if>
+				<if test='param.hasPos == "N"'>
+					AND (a.POS_COUNT IS NULL OR a.POS_COUNT = 0)
+				</if>
+			</if>
+			<if test="param.createTimeStart != null and param.createTimeStart != ''">
+				AND a.CREATE_TIME >=  #{param.createTimeStart}
+			</if>
+			<if test="param.createTimeEnd != null and param.createTimeEnd != ''">
+				AND a.CREATE_TIME
+				 <![CDATA[
+					<
+				]]>
+				#{param.createTimeEnd}
+			</if>
+			<if test="param.isLoss == 'YOU'" >
+				AND c.CREATE_TIME IS NOT NULL
+			</if>
+			<if test="param.isLoss == 'WU'">
+				AND c.CREATE_TIME IS NULL
+			</if>
+			<if test="param.updateTimeStart != null and param.updateTimeStart != ''">
+				AND a.UPDATE_TIME >=  #{param.updateTimeStart}
+			</if>
+			<if test="param.updateTimeEnd != null and param.updateTimeEnd != ''">
+				AND a.UPDATE_TIME
+				 <![CDATA[
+					<
+				]]>
+				#{param.updateTimeEnd}
+			</if>
+			<if test="param.isTrans != null and param.isTrans != ''">
+				<if test="param.isTrans == 'null' ">
+					AND a.IS_TRANS is null
+				</if>
+				<if test="param.isTrans != 'null' ">
+					AND a.IS_TRANS =  #{param.isTrans}
+				</if>
+			</if>
+			<if test="param.transTimeStart != null and param.transTimeStart != ''">
+				AND a.TRANS_TIME >=  #{param.transTimeStart}
+			</if>
+			<if test="param.transTimeEnd != null and param.transTimeEnd != ''">
+				AND a.TRANS_TIME
+				 <![CDATA[
+					<
+				]]>
+				#{param.transTimeEnd}
+			</if>
+		</where>
+		order by a.CREATE_TIME desc
+	</select>
+	
+	
+	<select id="findCustomerByDay" resultType="java.lang.String" parameterType="java.lang.Integer"   >
+		select customer_no 
+		from coeus.old_customer_loss a 
+		WHERE 
+		a.create_time >= date_sub(curdate() ,interval #{day} day) 
+		and a.create_time <![CDATA[
+					<
+				]]> date_sub(curdate() ,interval #{day}-1 day)
+		and a.is_trans is null
+		LIMIT #{number},#{pageLimit}
+	</select>
+	
+	<update id="updateOldCustomerActivateTrans" parameterType="java.lang.Integer">
+        update coeus.old_customer_loss a  set a.trans_time = 
+        case 
+        <foreach collection="list" item="item" index="index">
+            when a.customer_no=#{item.customerNo,jdbcType=VARCHAR} then #{item.transTime}
+        </foreach>
+         end,
+         a.optimistic=a.optimistic+1, a.is_trans='Y', a.update_time=sysdate()
+        where a.create_time >= date_sub(curdate() ,interval ${day} day) 
+		and a.create_time <![CDATA[
+					<
+				]]> date_sub(curdate() ,interval ${day}-1 day)
+		and a.is_trans is null and a.customer_no in 
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.customerNo,jdbcType=VARCHAR}
+        </foreach>
+    </update>
+	
+</mapper>

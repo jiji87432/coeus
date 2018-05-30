@@ -1,0 +1,73 @@
+
+.panel-primary{
+    font-size:12px;
+    border-color:rgb(227, 227, 227);
+}
+
+.panel-primary label{
+    font-weight:normal;
+}
+.panel-primary>.panel-heading{
+    font-size:12px;
+    padding:5px 10px;
+}
+
+.panel-primary .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+    padding:5px 8px;
+}
+
+.form-control > option{
+    height:27px;
+    font-size:12px;
+}
+
+.form-control{
+    height:27px;
+    font-size:12px;
+}
+
+.btn-primary{
+    border-color:#FFFFFF;
+}
+
+.panel-body {
+	padding: 10px;
+}
+.input-group {
+	padding: 1px;
+	width: 33% !important;
+}
+
+.coeus-form {
+    width: 100% !important;
+}
+
+.coeus-form .form-group {
+    margin-bottom: 3px;
+    width: 100%;
+}
+
+.coeus-form .input-group> .form-control {
+    min-width: 130px !important;
+    width: 100%;
+}
+
+
+.eclp_form .input-group {
+	width: 100%;
+}
+
+.coeus-form .input-group>label {
+    font-weight: normal;
+    min-width: 100px !important;
+    width: 30% !important;
+    font-size: 12px;
+}
+.coeus-form .input-group {
+    width: 100%
+}
+
+.coeus-time {
+	display: inline-block;
+	width: 100%;
+}

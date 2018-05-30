@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.pay.coeus.core.dao.coeus.CustomerDailyCountMapper">
+
+	<resultMap id="BaseResultMap" type="com.pay.coeus.model.entity.CustomerDailyCount">
+        <result property="id" column="ID"/>
+        <result property="optimistic" column="OPTIMISTIC"/>
+        <result property="app" column="APP"/>
+        <result property="weixin" column="WEIXIN"/>
+        <result property="weixinAll" column="WEIXIN_ALL"/>
+        <result property="weixinPos" column="WEIXIN_POS"/>
+        <result property="merchant" column="MERCHANT"/>
+        <result property="dailyDate" column="DAILY_DATE"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="remark" column="REMARK"/>
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Base_Column_List">
+		ID,OPTIMISTIC,APP,WEIXIN,WEIXIN_ALL,WEIXIN_POS,MERCHANT,DAILY_DATE,CREATE_TIME,REMARK
+	</sql>
+	
+	<!-- 新增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO CUSTOMER_DAILY_COUNT (
+        	OPTIMISTIC,
+        	APP,
+        	WEIXIN,
+        	WEIXIN_ALL,
+        	WEIXIN_POS,
+        	MERCHANT,
+        	DAILY_DATE,
+        	CREATE_TIME,
+        	REMARK
+		) VALUES (
+        	0,
+        	#{app},
+        	#{weixin},
+        	#{weixinAll},
+        	#{weixinPos},
+        	#{merchant},
+        	#{dailyDate},
+        	sysdate(),
+        	#{remark}
+		)
+	</insert>
+	
+	<!-- 获取用户: 输出直接映射到对象 -->
+	<select id="getByDate"  resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List" />
+		FROM CUSTOMER_DAILY_COUNT
+		WHERE DAILY_DATE=#{dailyDate}
+	</select>
+	<update id="update">
+		UPDATE CUSTOMER_DAILY_COUNT
+		<set>
+			OPTIMISTIC = OPTIMISTIC+1,
+			APP = #{app},
+			WEIXIN = #{weixin},
+			WEIXIN_ALL = #{weixinAll},
+			WEIXIN_POS = #{weixinPos},
+			MERCHANT = #{merchant},
+			DAILY_DATE = #{dailyDate},
+			REMARK = #{remark}
+		</set>
+        WHERE 
+	        ID = #{id}
+	</update>
+	
+	<select id="findAllList"  resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List" />
+		FROM CUSTOMER_DAILY_COUNT
+		<where>
+			<if test="param.dailyDate != null and param.dailyDate != ''">
+				AND DAILY_DATE =  #{param.dailyDate}
+			</if>
+		</where>
+		ORDER BY DAILY_DATE DESC
+	</select>
+	
+</mapper>

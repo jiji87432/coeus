@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.pay.coeus.core.dao.coeus.GpsLossCustomerMapper">
+
+	<resultMap id="BaseResultMap" type="com.pay.coeus.model.entity.GpsLossCustomer">
+        <result property="id" column="ID"/>
+        <result property="optimistic" column="OPTIMISTIC"/>
+        <result property="customerNo" column="CUSTOMER_NO"/>
+        <result property="createTime" column="CREATE_TIME"/>
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Base_Column_List">
+		ID,OPTIMISTIC,CUSTOMER_NO,CREATE_TIME
+	</sql>
+	
+	<!-- 获取用户: 输出直接映射到对象 -->
+	<select id="getByCustomerNo"  resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List" />
+		FROM GPS_LOSS_CUSTOMER
+		WHERE CUSTOMER_NO=#{customerNo}
+	</select>
+	
+	<insert id="insertBatch" useGeneratedKeys="true" parameterType="java.util.List">  
+	    <selectKey resultType="long" keyProperty="id" order="AFTER">  
+	        SELECT  
+	        LAST_INSERT_ID()  
+	    </selectKey>  
+	    insert into GPS_LOSS_CUSTOMER (
+	    	OPTIMISTIC,
+        	CUSTOMER_NO,
+        	CREATE_TIME)   
+	    values 
+	    <foreach collection="customerList" item="item" index="index" separator="," >  
+	        (0,
+        	#{item.CUSTOMER_NO},
+        	sysdate())  
+	    </foreach>  
+	</insert>  
+	
+	<!-- 新增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO GPS_LOSS_CUSTOMER (
+        	OPTIMISTIC,
+        	CUSTOMER_NO,
+        	CREATE_TIME
+		) VALUES (
+        	0,
+        	#{customerNo},
+        	sysdate()
+		)
+	</insert>
+	
+	<!-- 新增 -->
+	<insert id="insertCustomer">
+		INSERT INTO GPS_LOSS_CUSTOMER (
+        	OPTIMISTIC,
+        	CUSTOMER_NO,
+        	CREATE_TIME
+		) VALUES (
+        	0,
+        	#{customerNo},
+        	sysdate()
+		)
+	</insert>
+	
+	<delete id="delete" >
+		delete from GPS_MONITOR_CUSTOMER
+		where ID = #{id}
+	</delete>
+	
+	<!-- 获取用户: 输出直接映射到对象 -->
+	<select id="getBySimSupplier" resultType="String">
+		SELECT ICCID
+		FROM GPS_MONITOR_CUSTOMER
+		WHERE SIM_SUPPLIER=#{simSupplier}
+	</select>
+	
+	<select id="getTotalCount" resultType="Integer">
+		SELECT COUNT(ID)
+		FROM GPS_MONITOR_CUSTOMER
+	</select>
+	
+</mapper>

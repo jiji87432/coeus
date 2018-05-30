@@ -1,0 +1,48 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.pay</groupId>
+    <artifactId>base</artifactId>
+    <version>1.0.0</version>
+  </parent>
+  <artifactId>coeus</artifactId>
+  <version>1.0.1</version>
+  <packaging>pom</packaging>
+  <description>商户运营系统</description>
+  <properties>
+  	<spring.version>4.3.2.RELEASE</spring.version>
+	<aspectj.version>1.8.4</aspectj.version>
+	<mybatis.version>3.4.2</mybatis.version>
+	<tomcat-jdbc.version>8.0.20</tomcat-jdbc.version>
+	<mysql.connector.version>5.1.6</mysql.connector.version>
+	
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	<jdk.version>1.8</jdk.version>
+	<plugin.maven-compiler>3.6.1</plugin.maven-compiler>
+  </properties>
+  
+  <build>
+	<plugins>
+		<!--Maven编译插件 配置 -->
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>${plugin.maven-compiler}</version>
+			<configuration>
+				<source>${jdk.version}</source>
+				<target>${jdk.version}</target>
+				<encoding>${project.build.sourceEncoding}</encoding>
+			</configuration>
+		</plugin>
+	</plugins>
+</build>
+  
+  <modules>
+  	<module>coeus-common</module>
+  	<module>coeus-inner-api</module>
+  	<module>coeus-outer-api</module>
+  	<module>coeus-core</module>
+  	<module>coeus-model</module>
+  	<module>coeus-portal</module>
+  </modules>
+</project>

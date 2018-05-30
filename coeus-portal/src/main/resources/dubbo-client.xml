@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://code.alibabatech.com/schema/dubbo
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+		
+	<!-- 运营服务 -->
+	<dubbo:reference id="testDubboServiceFacade" interface="com.pay.coeus.api.inner.dubbo.TestDubboServiceFacade" timeout="30000" check="false"/>
+ 	<!-- 公共查询 -->
+	<dubbo:reference id="commonScriptServiceFacade" interface="com.pay.coeus.api.inner.dubbo.CommonScriptServiceFacade" timeout="30000" check="false"/>
+ 	<!--  商户留存与流失 -->
+	<dubbo:reference id="newOrLossCustomerFacade" interface="com.pay.coeus.api.inner.dubbo.NewOrLossCustomerFacade" timeout="30000" check="false"/>
+ 	<!--  日活 -->
+	<dubbo:reference id="customerDailyCountFacade" interface="com.pay.coeus.api.inner.dubbo.CustomerDailyCountFacade" timeout="30000" check="false"/>
+ 	<!--  联系方式来源 -->
+	<dubbo:reference id="customerContactTypeFacade" interface="com.pay.coeus.api.inner.dubbo.CustomerContactTypeFacade" timeout="30000" check="false"/>
+ 	<!--  有效联系方式 -->
+	<dubbo:reference id="customerContactInfoFacade" interface="com.pay.coeus.api.inner.dubbo.CustomerContactInfoFacade" timeout="30000" check="false"/>
+	<!--  联系方式记录 -->
+	<dubbo:reference id="customerContactHistoryFacade" interface="com.pay.coeus.api.inner.dubbo.CustomerContactHistoryFacade" timeout="30000" check="false"/>
+	<!--  日交易查询服务 -->
+	<dubbo:reference id="customerActiveOrderFacade" interface="com.pay.coeus.api.inner.dubbo.CustomerActiveOrderFacade" timeout="300000" check="false"/>
+	<!--  激活留存统计服务 -->
+	<dubbo:reference id="activateRetainedServiceFacade" interface="com.pay.coeus.api.inner.dubbo.ActivateRetainedServiceFacade" timeout="300000" check="false"/>
+	<!-- 社区信息查询 -->
+	<dubbo:reference id="communityInformationFacade" interface="com.pay.coeus.api.inner.dubbo.CommunityInformationFacade" timeout="300000" check="false"/>
+	<!-- 费率查询 -->
+	<dubbo:reference id="customerFeeAPIFacade" interface="com.pay.customer.buss.service.api.rate.facade.CustomerFeeAPIFacade" timeout="300000" check="false"/>
+	<!-- APP&公众号是否绑定查询 -->
+	<dubbo:reference id="wxCustomerOuterServiceFacade" interface="com.pay.wx.dubbo.WxCustomerOuterServiceFacade" timeout="300000" check="false"/>
+	
+ </beans>

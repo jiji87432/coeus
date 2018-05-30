@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.pay.coeus.core.dao.coeus.GpsMonitorDataMapper">
+
+	<resultMap id="BaseResultMap" type="com.pay.coeus.model.entity.GpsMonitorData">
+        <result property="id" column="ID"/>
+        <result property="optimistic" column="OPTIMISTIC"/>
+        <result property="batchId" column="BATCH_ID"/>
+        <result property="iccid" column="ICCID"/>
+        <result property="useFlow" column="USE_FLOW"/>
+        <result property="createTime" column="CREATE_TIME"/>
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Base_Column_List">
+		ID,OPTIMISTIC,BATCH_ID,ICCID,USE_FLOW,CREATE_TIME
+	</sql>
+	
+	
+	<insert id="insertBatch" useGeneratedKeys="true" parameterType="java.util.List">  
+	    <selectKey resultType="long" keyProperty="id" order="AFTER">  
+	        SELECT  
+	        LAST_INSERT_ID()  
+	    </selectKey>  
+	    insert into GPS_MONITOR_DATA (
+	    	OPTIMISTIC,
+        	BATCH_ID,
+        	ICCID,
+        	USE_FLOW,
+        	CREATE_TIME)   
+	    values 
+	    <foreach collection="dataList" item="item" index="index" separator="," >  
+	        (0,
+        	#{item.batchId},
+        	#{item.iccid},
+        	#{item.useFlow},
+        	sysdate())  
+	    </foreach>  
+	</insert>  
+	
+	<!-- 新增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO GPS_MONITOR_DATA (
+        	OPTIMISTIC,
+        	BATCH_ID,
+        	ICCID,
+        	USE_FLOW,
+        	CREATE_TIME
+		) VALUES (
+        	0,
+        	#{batchId},
+        	#{iccid},
+        	#{useFlow},
+        	sysdate()
+		)
+	</insert>
+	
+	<select id="getCountByIccid" resultType="Integer">
+		SELECT COUNT(ID)
+		FROM GPS_MONITOR_DATA
+		WHERE ICCID=#{iccid}
+		AND CREATE_TIME <![CDATA[>]]> #{strTime,jdbcType=DATE}
+	</select>
+	
+</mapper>

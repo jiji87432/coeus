@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://code.alibabatech.com/schema/dubbo
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+	default-autowire="byName">
+	
+	<!-- 报表 -->
+	<dubbo:service interface="com.pay.coeus.api.inner.dubbo.TestDubboServiceFacade" ref="testDubboServiceFacade" retries="0" />
+	<!-- 公共查询 -->
+	<dubbo:service interface="com.pay.coeus.api.inner.dubbo.CommonScriptServiceFacade" ref="commonScriptServiceFacade" retries="0" />
+	<!-- 沉淀商户联系方式服务 -->
+	<dubbo:service interface="com.pay.coeus.api.outer.dubbo.CustomerContactInfoOuterFacade" ref="customerContactInfoOuterFacade" retries="0" />
+	<!--  商户留存与流失 -->
+	<dubbo:service interface="com.pay.coeus.api.inner.dubbo.NewOrLossCustomerFacade" ref="newOrLossCustomerFacade" retries="0" />
+	<!--  日活  -->
+	<dubbo:service interface="com.pay.coeus.api.inner.dubbo.CustomerDailyCountFacade" ref="customerDailyCountFacade" retries="0" />
+	<!-- 联系方式来源 -->
+	<dubbo:service interface="com.pay.coeus.api.inner.dubbo.CustomerContactTypeFacade" ref="customerContactTypeFacade" retries="0" />
+	<!-- 有效联系方式 -->
+	<dubbo:service interface="com.pay.coeus.api.inner.dubbo.CustomerContactInfoFacade" ref="customerContactInfoFacade" retries="0" />
+	<!-- 联系方式记录 -->
+	<dubbo:service interface="com.pay.coeus.api.inner.dubbo.CustomerContactHistoryFacade" ref="customerContactHistoryFacade" retries="0" />
+	<!--商户活跃交易查询服务 -->
+	<dubbo:service interface="com.pay.coeus.api.inner.dubbo.CustomerActiveOrderFacade" ref="customerActiveOrderFacade" retries="0" />
+	<!-- 激活留存数据 -->
+	<dubbo:service interface="com.pay.coeus.api.inner.dubbo.ActivateRetainedServiceFacade" ref="activateRetainedServiceFacade" retries="0" />
+	
+	<!-- 社区信息查询 -->
+	<dubbo:service interface="com.pay.coeus.api.inner.dubbo.CommunityInformationFacade" ref="communityInformationFacade" retries="0" />
+	
+	
+</beans>

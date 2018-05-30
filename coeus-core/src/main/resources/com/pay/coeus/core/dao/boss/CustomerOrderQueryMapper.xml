@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.pay.coeus.core.dao.boss.CustomerOrderQueryMapper">
+	<!-- <resultMap id="BaseResultMap" type="com.pay.coeus.model.entity.NewCustomerActivate">
+        <result property="id" column="ID"/>
+        <result property="optimistic" column="OPTIMISTIC"/>
+        <result property="customerNo" column="CUSTOMER_NO"/>
+        <result property="customerName" column="CUSTOMER_NAME"/>
+        <result property="customerStatus" column="CUSTOMER_STATUS"/>
+        <result property="customerLevel" column="CUSTOMER_LEVEL"/>
+        <result property="customerCheckInfo" column="CUSTOMER_CHECK_INFO"/>
+        <result property="bindTime" column="BIND_TIME"/>
+        <result property="activateTime" column="ACTIVATE_TIME"/>
+        <result property="resultType" column="RESULT_TYPE"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="linkMan" column="LINK_MAN"/>
+        <result property="isTrans" column="IS_TRANS"/>
+        <result property="transTime" column="TRANS_TIME"/>
+	</resultMap> -->
+	
+	<select id="findTransTimeByTime"  resultType="java.util.HashMap" parameterType="java.lang.Long" >
+			select 
+			o.customer_no as "customerNo", 
+			min(o.create_time) as "transTime"
+			from posp_boss.pos_order o 
+			where o.status in ('SUCCESS','SETTLED')
+			and o.create_time >= TRUNC(sysdate- #{day} )
+			and o.customer_no in 
+			<foreach item="item" index="index" collection="customerNos" open="(" separator="," close=")">  
+    			#{item}  
+			</foreach>  
+			group by o.customer_no
+	</select>
+</mapper>

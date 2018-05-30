@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://code.alibabatech.com/schema/dubbo
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+		
+	<!-- 运营服务 -->
+	<!-- <dubbo:reference id="customerContactServiceFacade" interface="com.pay.posBoss.remote.service.CustomerContactServiceFacade" timeout="30000" check="false"/> -->
+ 	<!-- app日志查询服务 -->
+	<dubbo:reference id="appOperationOuterFacade" interface="com.pay.wx.dubbo.AppOperationOuterFacade" check="false" retries="0" timeout="30000"/>
+	<!-- 微信日志查询服务 -->
+	<dubbo:reference id="menuLogOuterFacade" interface="com.pay.wx.dubbo.MenuLogOuterFacade" check="false" retries="0" timeout="30000" />
+	<!-- 商户服务 -->
+	<dubbo:reference id="customerServiceFacade" interface="com.pay.customer.remote.service.CustomerServiceFacade" check="false" retries="0" timeout="30000" />
+	<!-- 扣费 -->
+	<dubbo:reference id="accountInterfaceVI" interface="com.pay.account.api.dubbo.AccountInterfaceVI" check="false" retries="0" timeout="30000" />
+	<!-- 查询扣费 -->
+	<dubbo:reference id="accountQueryInterface" interface="com.pay.account.api.dubbo.AccountQueryInterface" check="false" retries="0" timeout="30000" />
+	<!-- 查询操作员方式 -->
+	<dubbo:reference id="remoteNewCustomerLoginService" interface="com.pay.app.remote.service.RemoteNewCustomerLoginService" check="false" retries="0" timeout="30000" />
+	<!--  -->
+	<dubbo:reference id="wxCustomerOuterServiceFacade" interface="com.pay.wx.dubbo.WxCustomerOuterServiceFacade" check="false" retries="0" timeout="10000" />
+	
+ </beans>

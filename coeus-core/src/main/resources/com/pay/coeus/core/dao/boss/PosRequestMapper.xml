@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.pay.coeus.core.dao.boss.PosRequestMapper">
+	
+	<select id="getActiveCustomer"  resultType="java.util.HashMap">
+		select a.sim_card as SIM_CARD, a.customer_no as CUSTOMER_NO, c.sim_supplier as SIM_SUPPLIER
+		from posp_boss.pos_request a 
+		left join posp_boss.sim_card b on b.imsi=a.sim_card
+		left join posp_boss.sim_batch c on c.id = b.simbatch_id
+		where a.CREATE_TIME <![CDATA[ >= ]]> to_date('${strTime}','yyyy-MM-dd hh24:mi:ss')
+		and a.CREATE_TIME <![CDATA[ <= ]]> to_date('${endTime}','yyyy-MM-dd hh24:mi:ss')
+		and c.sim_supplier = '${simSupplier}'
+		group by a.sim_card, a.customer_no, c.sim_supplier
+	</select>
+	
+	<select id="getCountByCustomerNo"  resultType="Integer">
+		SELECT COUNT(a.ID)
+		FROM posp_boss.pos_request a
+		WHERE a.customer_no = '${customerNo}'
+		and a.CREATE_TIME <![CDATA[ >= ]]> to_date('${strTime}','yyyy-MM-dd hh24:mi:ss')
+	</select>
+</mapper>

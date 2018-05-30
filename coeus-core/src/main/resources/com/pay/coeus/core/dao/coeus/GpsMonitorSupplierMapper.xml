@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.pay.coeus.core.dao.coeus.GpsMonitorSupplierMapper">
+
+	<resultMap id="BaseResultMap" type="com.pay.coeus.model.entity.GpsMonitorSupplier">
+        <result property="id" column="ID"/>
+        <result property="optimistic" column="OPTIMISTIC"/>
+        <result property="name" column="NAME"/>
+        <result property="supplier" column="SUPPLIER"/>
+        <result property="status" column="STATUS"/>
+        <result property="createTime" column="CREATE_TIME"/>
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Base_Column_List">
+		ID,OPTIMISTIC,NAME,SUPPLIER,STATUS,CREATE_TIME
+	</sql>
+	
+	<!--  输出直接映射到对象 -->
+	<select id="getValidList"  resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List" />
+		FROM GPS_MONITOR_SUPPLIER
+		WHERE STATUS=1
+	</select>
+	
+</mapper>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.pay.coeus.core.dao.boss.CustomerTransDayMapper">
+
+	<resultMap id="BaseResultMap" type="com.pay.coeus.model.entity.CustomerTransDay">
+        <result property="id" column="ID"/>
+        <result property="customerNo" column="CUSTOMER_NO"/>
+        <result property="customerName" column="CUSTOMER_NAME"/>
+        <result property="agentNo" column="AGENT_NO"/>
+        <result property="transAmount" column="TRANS_AMOUNT"/>
+        <result property="transNum" column="TRANS_NUM"/>
+        <result property="orderTime" column="ORDER_TIME"/>
+        <result property="createTime" column="CREATE_TIME"/>
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		ID,CUSTOMER_NO,CUSTOMER_NAME,AGENT_NO,TRANS_AMOUNT,TRANS_NUM,ORDER_TIME,CREATE_TIME
+	</sql>
+
+	<select id="getActiveCustomerData"  resultType="java.util.HashMap">
+		select count(distinct p.customer_no) as ACTIVENUM, 
+		NVL(sum(p.trans_amount),0) as TRANSAMOUNT, 
+		NVL(sum(p.trans_num),0) as TRANSNUM 
+		from posp_boss.customer_trans_day p 
+		where p.order_time <![CDATA[ >= ]]> to_date('${strTime}', 'yyyy-MM-dd hh24:mi:ss')
+		and p.order_time <![CDATA[ <= ]]> to_date('${endTime}', 'yyyy-MM-dd hh24:mi:ss')
+	</select>
+	
+	<select id="getNewCustomerData"  resultType="java.util.HashMap">
+		select count(distinct p.customer_no) as NEWACTIVENUM, 
+		NVL(sum(p.trans_amount),0) as NEWTRANSAMOUNT, 
+		NVL(sum(p.trans_num),0) as NEWTRANSNUM 
+		from posp_boss.customer_trans_day p 
+		where p.order_time <![CDATA[ >= ]]> to_date('${strTime}', 'yyyy-MM-dd hh24:mi:ss')
+		and p.order_time <![CDATA[ <= ]]> to_date('${endTime}', 'yyyy-MM-dd hh24:mi:ss')
+		and p.customer_no in(
+			select c.customer_no from customer c
+			where c.open_time <![CDATA[ >= ]]> to_date('${strTime}', 'yyyy-MM-dd hh24:mi:ss')
+			and c.open_time <![CDATA[ <= ]]> to_date('${endTime}', 'yyyy-MM-dd hh24:mi:ss')
+			)
+	</select>
+	
+	<select id="findAllList"  resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List" />
+		FROM posp_boss.customer_trans_day 
+		<where>
+			<if test="param.customerNo != null and param.customerNo != ''">
+				AND CUSTOMER_NO = '${param.customerNo}' 
+			</if>
+			<if test="param.agentNo != null and param.agentNo != ''">
+				AND CUSTOMER_NO = '${param.agentNo}' 
+			</if>
+			<if test="param.createTimeStart != null and param.createTimeStart != ''">
+				AND CREATE_TIME <![CDATA[ >= ]]>  to_date('${param.createTimeStart}', 'yyyy-MM-dd hh24:mi:ss') 
+			</if>
+			<if test="param.createTimeEnd != null and param.createTimeEnd != ''">
+				AND CREATE_TIME <![CDATA[ <= ]]> to_date('${param.createTimeEnd}', 'yyyy-MM-dd hh24:mi:ss') 
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAllCountList"  resultType="java.util.HashMap">
+		SELECT 
+			ORDER_TIME,
+			COUNT(CUSTOMER_NO) AS CUST_NUM,
+			SUM(TRANS_AMOUNT) AS TRANS_AMOUNT,
+			SUM(TRANS_NUM) AS TRANS_NUM
+		FROM posp_boss.customer_trans_day 
+		<where>
+			<if test="param.agentNo != null and param.agentNo != ''">
+				AND CUSTOMER_NO = '${param.agentNo}' 
+			</if>
+			<if test="param.createTimeStart != null and param.createTimeStart != ''">
+				AND CREATE_TIME <![CDATA[ >= ]]>  to_date('${param.createTimeStart}', 'yyyy-MM-dd hh24:mi:ss') 
+			</if>
+			<if test="param.createTimeEnd != null and param.createTimeEnd != ''">
+				AND CREATE_TIME <![CDATA[ <= ]]> to_date('${param.createTimeEnd}', 'yyyy-MM-dd hh24:mi:ss') 
+			</if>
+		</where>
+		GROUP BY ORDER_TIME
+	</select>
+	
+</mapper>

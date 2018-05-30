@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/coeus.iml" filepath="$PROJECT_DIR$/coeus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/coeus-common/coeus-common.iml" filepath="$PROJECT_DIR$/coeus-common/coeus-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/coeus-core/coeus-core.iml" filepath="$PROJECT_DIR$/coeus-core/coeus-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/coeus-inner-api/coeus-inner-api.iml" filepath="$PROJECT_DIR$/coeus-inner-api/coeus-inner-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/coeus-model/coeus-model.iml" filepath="$PROJECT_DIR$/coeus-model/coeus-model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/coeus-outer-api/coeus-outer-api.iml" filepath="$PROJECT_DIR$/coeus-outer-api/coeus-outer-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/coeus-portal/coeus-portal.iml" filepath="$PROJECT_DIR$/coeus-portal/coeus-portal.iml" />
+    </modules>
+  </component>
+</project>

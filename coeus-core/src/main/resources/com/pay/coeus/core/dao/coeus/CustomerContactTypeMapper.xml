@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.pay.coeus.core.dao.coeus.CustomerContactTypeMapper">
+
+	<resultMap id="BaseResultMap" type="com.pay.coeus.model.entity.CustomerContactType">
+        <result property="id" column="ID"/>
+        <result property="optimistic" column="OPTIMISTIC"/>
+        <result property="name" column="NAME"/>
+        <result property="keyword" column="KEYWORD"/>
+        <result property="rank" column="RANK"/>
+        <result property="type" column="TYPE"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+        <result property="remark" column="REMARK"/>
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Base_Column_List">
+		ID,OPTIMISTIC,NAME,KEYWORD,RANK,TYPE,CREATE_TIME,UPDATE_TIME,REMARK
+	</sql>
+	
+	<!-- 新增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO CUSTOMER_CONTACT_TYPE (
+        	OPTIMISTIC,
+        	NAME,
+        	KEYWORD,
+        	RANK,
+        	TYPE,
+        	CREATE_TIME,
+        	UPDATE_TIME,
+        	REMARK
+		) VALUES (
+        	0,
+        	#{name},
+        	#{keyword},
+        	#{rank},
+        	#{type},
+        	sysdate(),
+        	sysdate(),
+        	#{remark}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE CUSTOMER_CONTACT_TYPE 
+		<set>
+			OPTIMISTIC = OPTIMISTIC+1,
+			NAME=#{name},
+        	KEYWORD=#{keyword},
+        	RANK=#{rank},
+        	TYPE=#{type},
+        	UPDATE_TIME=sysdate(),
+        	REMARK=#{remark}
+		</set>
+      WHERE 
+	        ID = #{id}
+	</update>
+	
+	<select id="getAllList"  resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List" />
+		FROM CUSTOMER_CONTACT_TYPE
+	</select>
+	
+	<select id="findById"  resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List" />
+		FROM CUSTOMER_CONTACT_TYPE
+		WHERE 
+	        ID = #{id}
+	</select>
+	
+	<select id="findByKeyword"  resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List" />
+		FROM CUSTOMER_CONTACT_TYPE
+		WHERE KEYWORD=#{keyword}
+	    LIMIT 1
+	</select>
+	
+	<select id="findAllList"  resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List" />
+		FROM CUSTOMER_CONTACT_TYPE
+		<where>
+			<if test="param.name != null and param.name != ''">
+				AND NAME =  #{param.name}
+			</if>
+			<if test="param.keyword != null and param.keyword != ''">
+				AND KEYWORD =  #{param.keyword}
+			</if>
+			<if test="param.type != null and param.type != ''">
+				AND TYPE =  #{param.type}
+			</if>
+		</where>
+		ORDER BY RANK DESC
+	</select>
+	
+</mapper>

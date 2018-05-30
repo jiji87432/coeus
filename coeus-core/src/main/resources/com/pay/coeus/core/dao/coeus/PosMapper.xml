@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.pay.coeus.core.dao.coeus.PosMapper">
+	
+	<!-- 新增 -->
+	<insert id="insertPosRequestRecord">
+		INSERT INTO pos_request_record (
+			<if test="param.customerNo != null ">
+			customer_No,
+			</if>
+			<if test="param.customerName != null ">
+			customer_Name,
+			</if>
+			<if test="param.mcc != null ">
+			mcc,
+			</if>
+			<if test="param.responseCode != null ">
+			response_Code,
+			</if>
+			<if test="param.posBatch != null ">
+			pos_Batch,
+			</if>
+			<if test="param.posCati != null ">
+			pos_Cati,
+			</if>
+			<if test="param.posSn != null ">
+			pos_Sn,
+			</if>
+			<if test="param.posEntryModeCode != null ">
+			pos_Entrymode_Code,
+			</if>
+			<if test="param.shopNo != null ">
+			shop_No,
+			</if>
+			<if test="param.electric != null ">
+			electric,
+			</if>
+			<if test="param.semaphore != null ">
+			semaphore,
+			</if>
+			<if test="param.failConnCount != null ">
+			fail_Conn_Count,
+			</if>
+			<if test="param.allConnCount != null ">
+			all_Conn_Count,
+			</if>
+			<if test="param.failCardCount != null ">
+			fail_Card_Count,
+			</if>
+			<if test="param.posId != null ">
+			pos_Id,
+			</if>
+			<if test="param.createTime != null ">
+			create_Time,
+			</if>
+			<if test="param.softVersion != null ">
+			soft_version,
+			</if>
+			<if test="param.posType != null ">
+			pos_type,
+			</if>
+			<if test="param.organization != null ">
+			organization,
+			</if>
+			optimistic
+		) VALUES (
+			<if test="param.customerNo != null ">
+			#{param.customerNo},
+			</if>
+			<if test="param.customerName != null ">
+			#{param.customerName},
+			</if>
+			<if test="param.mcc != null ">
+			#{param.mcc},
+			</if>
+			<if test="param.responseCode != null ">
+			#{param.responseCode},
+			</if>
+			<if test="param.posBatch != null ">
+			#{param.posBatch},
+			</if>
+			<if test="param.posCati != null ">
+			#{param.posCati},
+			</if>
+			<if test="param.posSn != null ">
+			#{param.posSn},
+			</if>
+			<if test="param.posEntryModeCode != null ">
+			#{param.posEntryModeCode},
+			</if>
+			<if test="param.shopNo != null ">
+			#{param.shopNo},
+			</if>
+			<if test="param.electric != null ">
+			#{param.electric},
+			</if>
+			<if test="param.semaphore != null ">
+			#{param.semaphore},
+			</if>
+			<if test="param.failConnCount != null ">
+			#{param.failConnCount},
+			</if>
+			<if test="param.allConnCount != null ">
+			#{param.allConnCount},
+			</if>
+			<if test="param.failCardCount != null ">
+			#{param.failCardCount},
+			</if>
+			<if test="param.posId != null ">
+			#{param.posId},
+			</if>
+			<if test="param.createTime != null ">
+			#{param.createTime},
+			</if>
+			<if test="param.softVersion != null ">
+			#{param.softVersion},
+			</if>
+			<if test="param.posType != null ">
+			#{param.posType},
+			</if>
+			<if test="param.organization != null ">
+			#{param.organization},
+			</if>
+			0
+		)
+	</insert>
+	<insert id="insertPosTransStatus">
+		INSERT INTO pos_trans_status (
+			<if test="param.transTime != null ">
+			trans_Time,
+			</if>
+			<if test="param.transLong != null ">
+			trans_Long,
+			</if>
+			<if test="param.returnCode != null ">
+			return_Code,
+			</if>
+			<if test="param.simCard != null ">
+			sim_Card,
+			</if>
+			<if test="param.baseStation != null ">
+			base_Station,
+			</if>
+			<if test="param.transType != null ">
+			trans_Type,
+			</if>
+			<if test="param.transIp != null ">
+			trans_Ip,
+			</if>
+			<if test="param.posId != null ">
+			pos_Id,
+			</if>
+			optimistic
+		) VALUES (
+			
+			<if test="param.transTime != null ">
+			#{param.transTime},
+			</if>
+			<if test="param.transLong != null ">
+			#{param.transLong},
+			</if>
+			<if test="param.returnCode != null ">
+			#{param.returnCode},
+			</if>
+			<if test="param.simCard != null ">
+			#{param.simCard},
+			</if>
+			<if test="param.baseStation != null ">
+			#{param.baseStation},
+			</if>
+			<if test="param.transType != null ">
+			#{param.transType},
+			</if>
+			<if test="param.transIp != null ">
+			#{param.transIp},
+			</if>
+			<if test="param.posId != null ">
+			#{param.posId},
+			</if>
+			0
+		)
+	</insert>
+	
+</mapper>

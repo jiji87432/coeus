@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="coeus-common" />
+        <module name="coeus-core" />
+        <module name="coeus-inner-api" />
+        <module name="coeus-model" />
+        <module name="coeus-outer-api" />
+        <module name="coeus-portal" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="1.8">
+      <module name="coeus" target="1.8" />
+      <module name="coeus-common" target="1.8" />
+      <module name="coeus-core" target="1.8" />
+      <module name="coeus-inner-api" target="1.8" />
+      <module name="coeus-model" target="1.8" />
+      <module name="coeus-outer-api" target="1.7" />
+      <module name="coeus-portal" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

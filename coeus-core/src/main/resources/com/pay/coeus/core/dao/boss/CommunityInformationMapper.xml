@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.pay.coeus.core.dao.boss.CommunityInformationMapper">
+
+	<!-- 查询 商编 商户名称 商户状态 商户等级 服务商编号 服务商名称 真实性标签  -->
+	<select id="CommunityInformatQuery" resultType="java.util.Map">
+	select c.customer_no as customerno,c.full_name as customerfullname,
+	c.status as status,
+	pcl.customer_level as customerlevel,
+	a.agent_no as agentno,a.full_name as agentfullname ,e.realy_type as realytype
+	from posp_boss.customer c
+	left join posp_boss.agent a on c.AGENT_NO = a.AGENT_NO
+	left join posp_boss.enterprise_check_info e on c.customer_no = e.customer_no
+	left join posp_boss.pos_customer_level pcl on c.customer_no = pcl.customer_no
+	where c.CUSTOMER_NO = #{customerNo}
+	</select>
+	<!-- 判断是否为大POS商户 -->
+	<select id="isBigPos" resultType="java.lang.String">
+		select c.customer_no as customerno from posp_boss.customer c 
+		where c.customer_no = #{customerNo}
+		and c.mcc NOT IN ('1000','1010','9990','9991','9992','9993','9997','9998','9999','2001','2002','2003','2004','2005','2006')
+		and c.agent_id NOT IN ('138','37439310','37447301')
+	</select>
+
+	<select id="monthSumAmount" resultType="java.lang.String">
+	select csp.sum_amount as sumamount from posp_boss.customer_sum_period csp 
+		where csp.customer_no = #{customerNo}
+		and csp.yearv =#{yearv}
+		and csp.periodv =#{periodv}
+	</select>
+</mapper> 
