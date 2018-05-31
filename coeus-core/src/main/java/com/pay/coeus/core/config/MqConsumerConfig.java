@@ -9,7 +9,7 @@ import com.pay.astrotrain.client.consumer.DefaultATPushConsumer;
 import com.pay.coeus.core.mqListener.PosRequestListener;
 
 @Configuration
-@PropertySource("classpath:/astrotrain.properties")
+@PropertySource("classpath:/application.properties")
 public class MqConsumerConfig {
 	
 	@Value("${astrotrain.appId}")

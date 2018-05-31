@@ -8,7 +8,7 @@ import org.springframework.context.annotation.PropertySource;
 import com.pay.astrotrain.client.producer.DefaultATProducer;
 
 @Configuration
-@PropertySource("classpath:/astrotrain.properties")
+@PropertySource("classpath:/application.properties")
 public class MqProducerConfig {
 	
 	@Value("${astrotrain.appId}")

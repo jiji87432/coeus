@@ -1,18 +1,13 @@
 package com.pay.coeus.core.config;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.alibaba.dubbo.config.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import com.alibaba.dubbo.config.ApplicationConfig;
-import com.alibaba.dubbo.config.MonitorConfig;
-import com.alibaba.dubbo.config.ProtocolConfig;
-import com.alibaba.dubbo.config.ProviderConfig;
-import com.alibaba.dubbo.config.RegistryConfig;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * dubbo配置
@@ -20,7 +15,7 @@ import com.alibaba.dubbo.config.RegistryConfig;
  *
  */
 @Configuration
-@PropertySource("classpath:/dubbo.properties")
+@PropertySource("classpath:/application.properties")
 public class DubboConfig {
 	@Value("${dubbo.appName}")
 	private String appName;

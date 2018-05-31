@@ -30,7 +30,7 @@ public class CamelUtil {
 	private static String host;// ip
 	private static String port;// port
 	static {
-		PropertyUtil propertyUtil = PropertyUtil.getInstance("wxweb");
+		PropertyUtil propertyUtil = PropertyUtil.getInstance("application");
 		host = propertyUtil.getProperty("com.pay.camel.host");
 		port = propertyUtil.getProperty("com.pay.camel.port");
 	}

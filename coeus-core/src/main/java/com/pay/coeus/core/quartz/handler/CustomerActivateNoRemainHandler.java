@@ -20,7 +20,7 @@ import com.pay.dsp.core.handler.annotation.JobHander;
  * @date 2017年10月24日 下午5:41:09
  */
 @JobHander(value = "customerActivateNoRemainHandler")
-@PropertySource("classpath:/constant.properties")
+@PropertySource("classpath:/application.properties")
 @Component
 public class CustomerActivateNoRemainHandler extends BaseJobHandler {
 	

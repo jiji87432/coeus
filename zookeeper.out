@@ -1,0 +1,26 @@
+2018-05-31 09:42:30,473 [myid:] - INFO  [main:QuorumPeerConfig@103] - Reading configuration from: /Users/jiji/Documents/zookeeper-3.4.6/bin/../conf/zoo.cfg
+2018-05-31 09:42:30,477 [myid:] - INFO  [main:DatadirCleanupManager@78] - autopurge.snapRetainCount set to 3
+2018-05-31 09:42:30,477 [myid:] - INFO  [main:DatadirCleanupManager@79] - autopurge.purgeInterval set to 0
+2018-05-31 09:42:30,477 [myid:] - INFO  [main:DatadirCleanupManager@101] - Purge task is not scheduled.
+2018-05-31 09:42:30,477 [myid:] - WARN  [main:QuorumPeerMain@113] - Either no config or no quorum defined in config, running  in standalone mode
+2018-05-31 09:42:30,490 [myid:] - INFO  [main:QuorumPeerConfig@103] - Reading configuration from: /Users/jiji/Documents/zookeeper-3.4.6/bin/../conf/zoo.cfg
+2018-05-31 09:42:30,491 [myid:] - INFO  [main:ZooKeeperServerMain@95] - Starting server
+2018-05-31 09:42:30,498 [myid:] - INFO  [main:Environment@100] - Server environment:zookeeper.version=3.4.6-1569965, built on 02/20/2014 09:09 GMT
+2018-05-31 09:42:30,499 [myid:] - INFO  [main:Environment@100] - Server environment:host.name=localhost
+2018-05-31 09:42:30,499 [myid:] - INFO  [main:Environment@100] - Server environment:java.version=1.8.0_101
+2018-05-31 09:42:30,499 [myid:] - INFO  [main:Environment@100] - Server environment:java.vendor=Oracle Corporation
+2018-05-31 09:42:30,499 [myid:] - INFO  [main:Environment@100] - Server environment:java.home=/Library/Java/JavaVirtualMachines/jdk1.8.0_101.jdk/Contents/Home/jre
+2018-05-31 09:42:30,499 [myid:] - INFO  [main:Environment@100] - Server environment:java.class.path=/Users/jiji/Documents/zookeeper-3.4.6/bin/../build/classes:/Users/jiji/Documents/zookeeper-3.4.6/bin/../build/lib/*.jar:/Users/jiji/Documents/zookeeper-3.4.6/bin/../lib/slf4j-log4j12-1.6.1.jar:/Users/jiji/Documents/zookeeper-3.4.6/bin/../lib/slf4j-api-1.6.1.jar:/Users/jiji/Documents/zookeeper-3.4.6/bin/../lib/netty-3.7.0.Final.jar:/Users/jiji/Documents/zookeeper-3.4.6/bin/../lib/log4j-1.2.16.jar:/Users/jiji/Documents/zookeeper-3.4.6/bin/../lib/jline-0.9.94.jar:/Users/jiji/Documents/zookeeper-3.4.6/bin/../zookeeper-3.4.6.jar:/Users/jiji/Documents/zookeeper-3.4.6/bin/../src/java/lib/*.jar:/Users/jiji/Documents/zookeeper-3.4.6/bin/../conf:
+2018-05-31 09:42:30,499 [myid:] - INFO  [main:Environment@100] - Server environment:java.library.path=/Users/jiji/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.
+2018-05-31 09:42:30,499 [myid:] - INFO  [main:Environment@100] - Server environment:java.io.tmpdir=/var/folders/5p/vy6g_c7950q6fgy440gylxmm0000gn/T/
+2018-05-31 09:42:30,499 [myid:] - INFO  [main:Environment@100] - Server environment:java.compiler=<NA>
+2018-05-31 09:42:30,500 [myid:] - INFO  [main:Environment@100] - Server environment:os.name=Mac OS X
+2018-05-31 09:42:30,501 [myid:] - INFO  [main:Environment@100] - Server environment:os.arch=x86_64
+2018-05-31 09:42:30,501 [myid:] - INFO  [main:Environment@100] - Server environment:os.version=10.13.4
+2018-05-31 09:42:30,501 [myid:] - INFO  [main:Environment@100] - Server environment:user.name=jiji
+2018-05-31 09:42:30,501 [myid:] - INFO  [main:Environment@100] - Server environment:user.home=/Users/jiji
+2018-05-31 09:42:30,501 [myid:] - INFO  [main:Environment@100] - Server environment:user.dir=/Users/jiji/Downloads/code/coeus_20180525_lyz
+2018-05-31 09:42:30,510 [myid:] - INFO  [main:ZooKeeperServer@755] - tickTime set to 2000
+2018-05-31 09:42:30,510 [myid:] - INFO  [main:ZooKeeperServer@764] - minSessionTimeout set to -1
+2018-05-31 09:42:30,510 [myid:] - INFO  [main:ZooKeeperServer@773] - maxSessionTimeout set to -1
+2018-05-31 09:42:30,531 [myid:] - INFO  [main:NIOServerCnxnFactory@94] - binding to port 0.0.0.0/0.0.0.0:2181

@@ -22,7 +22,7 @@ import com.pay.dsp.core.handler.annotation.JobHander;
  * @date 2017年10月25日 上午11:35:46
  */
 @JobHander(value = "oldCustomerLossHandler")
-@PropertySource("classpath:/constant.properties")
+@PropertySource("classpath:/application.properties")
 @Component
 public class OldCustomerLossHandler extends BaseJobHandler {
 	

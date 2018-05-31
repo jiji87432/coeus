@@ -20,7 +20,7 @@ import com.pay.commons.cache.bean.String2HashSet;
  */
 @Configuration
 @ComponentScan(basePackages = "com.pay.coeus.common.jedis", excludeFilters = { @Filter(Controller.class), @Filter(Configuration.class) })
-@PropertySource("classpath:/redis.properties")
+@PropertySource("classpath:/application.properties")
 public class JedisConfig {
 	@Value("${redis.master.name}")
 	private String masterName;

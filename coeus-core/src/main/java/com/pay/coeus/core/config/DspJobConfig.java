@@ -1,7 +1,6 @@
 package com.pay.coeus.core.config;
 
-import java.io.IOException;
-
+import com.pay.dsp.core.executor.DspJobExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import com.pay.dsp.core.executor.DspJobExecutor;
+import java.io.IOException;
 
 /**
  * 分布式调度平台配置
@@ -21,7 +20,7 @@ import com.pay.dsp.core.executor.DspJobExecutor;
  */
 @Configuration
 @ComponentScan(basePackages = "com.pay.coeus.core.quartz.handler")
-@PropertySource("classpath:/system.properties")
+@PropertySource("classpath:/application.properties")
 public class DspJobConfig {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DspJobConfig.class);

@@ -17,7 +17,7 @@ import javax.validation.ValidatorFactory;
  */
 @Configuration
 @EnableAspectJAutoProxy
-@EnableApolloConfig({"application", "quartz"})
+@EnableApolloConfig("application")
 @Import({DubboConfig.class,DubboClientConfig.class, JedisConfig.class,DubboServiceConfig.class,DBConfig.class, MyBatisConfig.class, 
 	PospbossMyBatisConfig.class,MqConsumerConfig.class,DspJobConfig.class,MqProducerConfig.class})
 @ComponentScan(

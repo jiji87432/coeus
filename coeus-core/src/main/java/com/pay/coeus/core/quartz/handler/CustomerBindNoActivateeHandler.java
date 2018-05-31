@@ -21,7 +21,7 @@ import com.pay.dsp.core.handler.annotation.JobHander;
  */
 @JobHander(value = "customerBindNoActivateeHandler")
 @Component
-@PropertySource("classpath:/constant.properties")
+@PropertySource("classpath:/application.properties")
 public class CustomerBindNoActivateeHandler extends BaseJobHandler {
 	
 	Logger logger = LoggerFactory.getLogger(CustomerBindNoActivateeHandler.class);
